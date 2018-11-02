@@ -10,7 +10,7 @@ Date_Epoch=$(date +"%s")
 mysql_host=localhost
 mysql_port=3307
 mysql_usr=root
-mysql_db=bdm2
+mysql_db=cloud_bdm
 
 home_folder=/mnt/mysql-datavol/mysql-backups
 LogFile="/mnt/mysql-datavol/mysql-backups/bdm-mysql-bkup-${NOW_Month}${NOW_Year}.log"
@@ -28,7 +28,7 @@ echo "START --------------------------------------------------------------------
 echo "////////////////////////////////////////////////////////////////////////////////////////////"  >> $LogFile
 echo "$NOW - Starting Job - STAGE 1 - Dumping BDM mysql dB to file." >> $LogFile
 
-mysqldump --defaults-file=$home_folder/.my.cnf --routines -h $mysql_host -u$mysql_usr -P$mysql_port $mysql_db | gzip -c > ${bdm_mysql_source}bdm-db-backup-$DATE_SIGN-$Date_Epoch.sql.gz
+mysqldump --defaults-file=$home_folder/.my.cnf --routines --events --triggers -h $mysql_host -u$mysql_usr -P$mysql_port $mysql_db | gzip -c > ${bdm_mysql_source}bdm-db-backup-$DATE_SIGN-$Date_Epoch.sql.gz
 
 echo "$NOW - Starting Job - STAGE 2 - Sending BDM mysql dump to S3-bucket." >> $LogFile
 
@@ -56,3 +56,6 @@ fi
 # Print some lines to the end of the LOG process.
 echo "$(date) - Ended backup Job - Desination AWS-bucket is $bdm_mysql_s3bucket$bdm_mysql_dest_folder." >> $LogFile
 echo "====================================================================================== END" >> $LogFile
+echo " - " >> $LogFile
+echo " - " >> $LogFile
+echo " - " >> $LogFile
