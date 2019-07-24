@@ -1,11 +1,25 @@
 SELECT  1 AS CANTIDAD,
 d2.etiqueta,
 d1.fecha_cargue AS FECHA, 
-d1.ubicacion AS UBICACION, 
+-- d1.ubicacion AS UBICACION, 
+-- TRIM('|' FROM d1.ubicacion) AS UBICACION,
+IF (TRIM('|' FROM d1.ubicacion) = '','NA',TRIM('|' FROM d1.ubicacion)) AS UBICACION,
 d1.titulo AS TITULO, 
-d1.contenido AS CONTENIDO, 
+-- TRIM(BOTH '\n' FROM d1.contenido) AS CONTENIDO, 
+REPLACE (d1.contenido,'\n','') AS CONTENIDO,
 d1.link AS LINK, 
-COALESCE (d3.nombre,'') AS FUENTE,
+-- COALESCE (d3.nombre,'') AS FUENTE,
+CASE d1.id_rss 
+     WHEN 432 THEN 'instagram'
+     WHEN 433 THEN 'facebook'
+     WHEN 434 THEN 'blogger'
+     WHEN 435 THEN 'wordpress'
+     WHEN 436 THEN 'tumblr'
+     WHEN 437 THEN 'livejournal'
+     WHEN 438 THEN 'twitter'
+     WHEN 439 THEN 'youtube'
+     ELSE 'NA' 
+    END AS FUENTE,
 CASE CONCAT (positivo,negativo,neutro) 
 		WHEN 'SNN' THEN 'POSITIVO'
 		WHEN 'NSN' THEN 'NEGATIVO'
@@ -18,7 +32,8 @@ INTO OUTFILE '/var/lib/mysql-files/output.csv'
 FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'
 -- FIELDS ESCAPED BY '\'
-LINES TERMINATED BY '\n' 
+escaped by ""
+LINES TERMINATED BY '\r\n' 
 
 FROM cloud_bdm.ic_rss_coincidencias d1
 
