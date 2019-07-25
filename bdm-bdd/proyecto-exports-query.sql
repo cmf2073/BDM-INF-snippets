@@ -1,3 +1,5 @@
+-- set @clientID = '${clientID}';
+
 SELECT  1 AS CANTIDAD,
 d2.etiqueta,
 d1.fecha_cargue AS FECHA, 
@@ -28,7 +30,9 @@ CASE CONCAT (positivo,negativo,neutro)
  END AS SENTIMIENTO,
 COALESCE (d4.nombre,'') AS DIRECTORIO
 
-INTO OUTFILE '/var/lib/mysql-files/output.csv'
+-- INTO OUTFILE concat('/var/lib/mysql-files/output-', @client_ID ,'.csv');
+INTO OUTFILE '/var/lib/mysql-files/OutFile2.csv'
+
 FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'
 -- FIELDS ESCAPED BY '\'
@@ -48,5 +52,5 @@ LEFT JOIN (
 
 
 WHERE id_etiqueta IN (SELECT id FROM cloud_bdm.ic_etiquetas
-						WHERE usuario_cliente=834)
+						WHERE usuario_cliente=@clientID)
 
