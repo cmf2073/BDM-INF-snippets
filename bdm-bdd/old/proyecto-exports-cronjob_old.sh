@@ -38,7 +38,7 @@ echo "- - - - - Startting JOB - - - -" $NOW
 
 ## Execute mysql query
 #### mysql --defaults-file=$Home_folder/.my.cnf  $mysql_db < /home/ubuntu/.scripts/BDM-INF-snippets/bdm-bdd/proyecto_claves_query-xxx.sql
-mysql --defaults-file=$Home_folder/.my_2.cnf  $mysql_db -e "set @clientID='${clientID}';source /home/ubuntu/.scripts/BDM-INF-snippets/bdm-bdd/proyecto-exports-query.sql;"
+mysql --defaults-file=$Home_folder/.my.cnf  $mysql_db -e "set @clientID='${clientID}';set collation_connection='utf8_spanish_ci';source /home/ubuntu/.scripts/BDM-INF-snippets/bdm-bdd/proyecto-exports-query.sql;"
 
 ## Upload output.csv file to bdm-exports-private bucket
 /usr/bin/s3cmd put $MYSQL_Output_file $S3_record_bucket$NOW_Year-$NOW_Month-$NOW_Day-$NOW_Hour-$clientID-output.csv

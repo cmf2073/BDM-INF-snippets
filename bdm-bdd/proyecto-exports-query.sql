@@ -1,5 +1,4 @@
--- set @clientID = '${clientID}';
-
+-- SET collation_connection = 'utf8_spanish_ci';
 SELECT  1 AS CANTIDAD,
 d2.etiqueta,
 d1.fecha_cargue AS FECHA, 
@@ -45,12 +44,8 @@ LEFT JOIN ic_etiquetas d2
 		ON d2.id = d1.id_etiqueta
 LEFT JOIN ic_rss d3
 		ON d3.id_rss = d1.id_rss
-
 LEFT JOIN (
 			ic_directorios d4 LEFT JOIN ic_concidencia_directorio d5 ON d5.id_directorio = d4.id
             ) ON d5.id_coincidencia = d1.id
-
-
 WHERE id_etiqueta IN (SELECT id FROM cloud_bdm.ic_etiquetas
 						WHERE usuario_cliente=@clientID)
-

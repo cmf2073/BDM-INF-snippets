@@ -1,0 +1,7 @@
+[mysql]
+user=bdmreader
+password=$$qweASDzxc$$
+
+[mysqldump]
+user=root
+password=Mara1234$
