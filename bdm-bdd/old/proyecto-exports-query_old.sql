@@ -1,10 +1,5 @@
-SET @curRow = 0;
-
-SELECT 'ID_FILA','CANTIDAD','ETIQUETA','FECHA','UBUCACION','TITULO','CONTENIDO','LINK','FUENTE','SENTIMIENTO','CLASIFICACION'
-UNION ALL
-
-SELECT  @curRow := @curRow + 1 AS ID_FILA,
-1 AS CANTIDAD,
+-- SET collation_connection = 'utf8_spanish_ci';
+SELECT  1 AS CANTIDAD,
 d2.etiqueta,
 d1.fecha_cargue AS FECHA, 
 -- d1.ubicacion AS UBICACION, 
